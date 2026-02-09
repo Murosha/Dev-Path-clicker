@@ -15,6 +15,8 @@ margin: 0;
 }
 
 #click {
+  position: absolute;
+  top: 80px;
   width: 220px;
   height: 220px;
   border-radius: 35%;
@@ -24,7 +26,7 @@ margin: 0;
   color: #0f172a;
   box-shadow: 0 14px 30px rgba(0,0,0,0.45);
   cursor: pointer;
-  transition: transform 0.04s ease;
+  transition: transform 0.01s ease;
 }
 #click:active {
     transform: scale(0.96);
@@ -42,7 +44,7 @@ margin: 0;
 #maxEnergy {
     position: absolute;
     top: 5px;
-    left: 45%;
+    left: 35%;
 }
 #update1 {
   background: #59b460;
