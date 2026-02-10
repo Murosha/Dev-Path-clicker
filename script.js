@@ -1,4 +1,3 @@
-console.log('SCRIPT LOADED')
 let balance = 0
 let clickPlus = 1
 let maxEnergy = 200
@@ -41,16 +40,27 @@ function saveGame() {
     localStorage.setItem('maxEnergy', maxEnergy)
     localStorage.setItem('lastSaveTime', Date.now())
 }
+const allowedClickPlus = [1, 2, 3, 4, 5, 10, 20, 50]
 
+if (!allowedClickPlus.includes(clickPlus)) {
+    console.warn('Invalid clickPlus reset:', clickPlus)
+    clickPlus = 1
+    localStorage.setItem('clickPlus', 1)
+}
 // click
-btn.addEventListener(`click`,() => {
-    if (maxEnergy <= 0) return
-    maxEnergy -= 1
-    balance += clickPlus
-    energy.innerText = '⚡' + maxEnergy
-    balanc.innerText = `🪙` + balance
-    saveGame()
-})
+if (!btn.dataset.bound) {
+    btn.dataset.bound = '1'
+
+    btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault()
+        if (maxEnergy <= 0) return
+        maxEnergy -= 1
+        balance += clickPlus
+        energy.innerText = '⚡' + maxEnergy
+        balanc.innerText = '🪙' + balance
+        saveGame()
+    })
+}
 // add energy
 setInterval(() => {
     if (maxEnergy <= 199) {
