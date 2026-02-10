@@ -1,3 +1,4 @@
+console.log('SCRIPT LOADED')
 let balance = 0
 let clickPlus = 1
 let maxEnergy = 200
