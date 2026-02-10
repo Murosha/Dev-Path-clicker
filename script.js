@@ -14,6 +14,33 @@ const update4 = document.getElementById(`update4`)
 const update5 = document.getElementById(`update5`)
 const update6 = document.getElementById(`update6`)
 const update7 = document.getElementById(`update7`)
+
+
+const savedBalance = localStorage.getItem('balance')
+const savedClickPlus = localStorage.getItem('clickPlus')
+const savedMaxEnergy = localStorage.getItem('maxEnergy')
+const lastTime = localStorage.getItem('lastSaveTime')
+
+if (savedBalance !== null) balance = Number(savedBalance)
+if (savedClickPlus !== null) clickPlus = Number(savedClickPlus)
+if (savedMaxEnergy !== null) maxEnergy = Number(savedMaxEnergy)
+    if (lastTime !== null) {
+    const now = Date.now()
+    const diff = now - Number(lastTime) 
+
+    const energyPerMs = 1 / 6000 
+    const gainedEnergy = Math.floor(diff * energyPerMs)
+
+    maxEnergy = Math.min(200, maxEnergy + gainedEnergy)
+}
+
+function saveGame() {
+    localStorage.setItem('balance', balance)
+    localStorage.setItem('clickPlus', clickPlus)
+    localStorage.setItem('maxEnergy', maxEnergy)
+    localStorage.setItem('lastSaveTime', Date.now())
+}
+
 // click
 btn.addEventListener(`click`,() => {
     if (maxEnergy <= 0) return
@@ -21,6 +48,7 @@ btn.addEventListener(`click`,() => {
     balance += clickPlus
     energy.innerText = '⚡' + maxEnergy
     balanc.innerText = `🪙` + balance
+    saveGame()
 })
 // add energy
 setInterval(() => {
@@ -36,13 +64,14 @@ if (balance >= bye) {
     balance -= bye
     clickPlus = plus
     balanc.innerText = `🪙` + balance
-    updateButtons()
 }
 else {
     showMessage(`Not enough coins!`)
 }
+ updateButtons()
+ saveGame()
 }
-
+/* по натисканню кнопки запускаєм функцію з такими значеннями */
 update1.onclick = () => update(200, 2)
 update2.onclick = () => update(650, 3)
 update3.onclick = () => update(2000, 4)
@@ -65,7 +94,7 @@ function updateButtons() {
           if (clickPlus === 20) update7.style.display = 'inline-block'
 }
 
-
+// смс
 function showMessage(text) {
     message.innerText = text
     message.style.opacity = '1'
@@ -74,3 +103,7 @@ function showMessage(text) {
         message.style.opacity = '0'
     }, 3000)
 }
+// показ збереження
+energy.innerText = '⚡' + maxEnergy
+balanc.innerText = '🪙' + balance
+updateButtons()
