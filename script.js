@@ -48,19 +48,14 @@ if (!allowedClickPlus.includes(clickPlus)) {
     localStorage.setItem('clickPlus', 1)
 }
 // click
-if (!btn.dataset.bound) {
-    btn.dataset.bound = '1'
-
-    btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault()
-        if (maxEnergy <= 0) return
-        maxEnergy -= 1
-        balance += clickPlus
-        energy.innerText = '⚡' + maxEnergy
-        balanc.innerText = '🪙' + balance
-        saveGame()
-    })
-}
+btn.addEventListener(`click`,() => {
+    if (maxEnergy <= 0) return
+    maxEnergy -= 1
+    balance += clickPlus
+    energy.innerText = '⚡' + maxEnergy
+    balanc.innerText = `🪙` + balance
+    saveGame()
+})
 // add energy
 setInterval(() => {
     if (maxEnergy <= 199) {
